@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+</head>
+
+<body>
+
+    <button id="facebook-login">Conectarse con facebook</button>
+
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-auth.js"></script>
+
+    <script>
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBD38CkNcVWYb-0JsHM3OoxMjC6GwHjmPg",
+            authDomain: "facebookbuton.firebaseapp.com",
+            databaseURL: "https://facebookbuton.firebaseio.com",
+            projectId: "facebookbuton",
+            storageBucket: "facebookbuton.appspot.com",
+            messagingSenderId: "741943771127",
+            appId: "1:741943771127:web:95e1493c09be51c0d7f8f2",
+            measurementId: "G-E1JP73K71J"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const initFacebookLogin = () => {
+            var provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().languageCode = 'es_MX';
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+
+                    console.log(user);
+
+                }).catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+
+                    console.error(errorMessage);
+
+                    // ...
+                });
+        }
+
+        const facebookButton = document.querySelector("#facebook-login")
+        facebookButton.addEventListener("click", initFacebookLogin)
+
+    </script>
+
+</body>
+
+</html>
